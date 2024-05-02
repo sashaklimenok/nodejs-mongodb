@@ -8,4 +8,8 @@ export const injectKeys = {
   // Auth Module
   IAuthController: Symbol.for('IAuthController'),
   IAuthService: Symbol.for('IAuthService'),
+
+  // User Module
+  IUserService: Symbol.for('IUserService'),
+  IUserRepository: Symbol.for('IUserRepository'),
 };

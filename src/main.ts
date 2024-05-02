@@ -15,6 +15,10 @@ import { IAuthService } from './modules/auth/service/auth.service.interface';
 import { AuthService } from './modules/auth/service/auth.service';
 import { IDatabaseService } from './services/database/database.interface';
 import { DatabaseService } from './services/database/database.service';
+import { IUserService } from './modules/user/service/user.service.interface';
+import { UserService } from './modules/user/service/user.service';
+import { IUserRepository } from './modules/user/repository/user.repository.interface';
+import { userRepository } from './modules/user/repository/user.repository';
 
 const compositionRoot = new ContainerModule((bind) => {
   bind<App>(injectKeys.Application).to(App);
@@ -26,6 +30,10 @@ const compositionRoot = new ContainerModule((bind) => {
   // Auth Module
   bind<IAuthController>(injectKeys.IAuthController).to(AuthController);
   bind<IAuthService>(injectKeys.IAuthService).to(AuthService);
+
+  // User Module
+  bind<IUserService>(injectKeys.IUserService).to(UserService);
+  bind<IUserRepository>(injectKeys.IUserRepository).to(userRepository);
 });
 
 const bootstrap = (): { appContainer: Container; app: App } => {
