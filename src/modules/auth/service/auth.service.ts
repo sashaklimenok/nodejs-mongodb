@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { AuthSignInDto } from '../dto/auth.sign-in.dto';
-import { AuthSignUpDto } from '../dto/auth.sign-up.dto copy';
+import { AuthSignUpDto } from '../dto/auth.sign-up.dto';
 import { IAuthService } from './auth.service.interface';
 import { AuthEntity } from '../entity/auth.entity';
 

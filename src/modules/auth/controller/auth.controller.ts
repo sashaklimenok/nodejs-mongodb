@@ -5,9 +5,10 @@ import { injectKeys } from '../../../shared/constants/injectKeys';
 import { ILoggerService } from '../../../services/logger/logger.interface';
 import { ExpressHandler } from '../../../types/express-handlers';
 import { IAuthController } from './auth.controller.interface';
-import { AuthSignUpDto } from '../dto/auth.sign-up.dto copy';
+import { AuthSignUpDto } from '../dto/auth.sign-up.dto';
 import { AuthSignInDto } from '../dto/auth.sign-in.dto';
 import { IAuthService } from '../service/auth.service.interface';
+import { ValidateMiddleware } from '../../../shared/middlewares/validated.middleware';
 
 @injectable()
 export class AuthController extends Controller implements IAuthController {
@@ -21,11 +22,13 @@ export class AuthController extends Controller implements IAuthController {
       {
         path: '/sign-up',
         method: 'post',
+        middlewares: [new ValidateMiddleware(AuthSignUpDto)],
         handler: this.signUp,
       },
       {
         path: '/sign-in',
         method: 'post',
+        middlewares: [new ValidateMiddleware(AuthSignInDto)],
         handler: this.signIn,
       },
       {

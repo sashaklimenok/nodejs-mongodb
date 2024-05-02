@@ -1,5 +1,5 @@
 import { AuthSignInDto } from '../dto/auth.sign-in.dto';
-import { AuthSignUpDto } from '../dto/auth.sign-up.dto copy';
+import { AuthSignUpDto } from '../dto/auth.sign-up.dto';
 
 export interface IAuthService {
   signUpUser: (dto: AuthSignUpDto) => Promise<void>;

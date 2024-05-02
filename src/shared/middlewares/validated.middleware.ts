@@ -10,7 +10,7 @@ export class ValidateMiddleware implements IMiddleware {
 
   handle(request: Request, response: Response, next: NextFunction): void {
     const instance = plainToClass(this.classToValidate, request.body);
-    validate(instance).then((errors) => {
+    validate(instance, { validationError: { target: false, value: false } }).then((errors) => {
       if (errors.length) {
         response.status(400).json({ errors });
       } else {
