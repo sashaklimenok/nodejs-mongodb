@@ -6,11 +6,13 @@ import { injectKeys } from './shared/constants/injectKeys';
 import { LoggerService } from './services/logger/logger.service';
 import { ConfigService } from './services/config/config.service';
 import { AuthController } from './modules/auth/controller/auth.controller';
+import { ExceptionFilter } from './shared/exception-filter/exception.filter';
 
 const compositionRoot = new ContainerModule((bind) => {
   bind<App>(injectKeys.Application).to(App);
   bind<LoggerService>(injectKeys.ILoggerService).to(LoggerService);
   bind<ConfigService>(injectKeys.IConfigService).to(ConfigService);
+  bind<ExceptionFilter>(injectKeys.IExceptionFilter).to(ExceptionFilter);
 
   // Controllers
   bind<AuthController>(injectKeys.IAuthController).to(AuthController);

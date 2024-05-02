@@ -7,6 +7,7 @@ import { IConfigService } from './services/config/config.service.interface';
 import { ILoggerService } from './services/logger/logger.interface';
 import { IAuthController } from './modules/auth/controller/auth.controller.interface';
 import { notFoundMiddleware } from './shared/middlewares/not-found.middleware';
+import { IExceptionFilter } from './shared/exception-filter/exception.filter.interface';
 
 @injectable()
 export class App {
@@ -18,6 +19,7 @@ export class App {
     @inject(injectKeys.ILoggerService) private logger: ILoggerService,
     @inject(injectKeys.IConfigService) private config: IConfigService,
     @inject(injectKeys.IAuthController) private authController: IAuthController,
+    @inject(injectKeys.IExceptionFilter) private exceptionFilter: IExceptionFilter,
   ) {
     this.app = express();
     this.port = this.config.get('PORT');
@@ -26,6 +28,10 @@ export class App {
   useMiddleWares(): void {
     this.app.use(json());
     this.app.use(morgan('dev'));
+  }
+
+  useExceptionFilters(): void {
+    this.app.use(this.exceptionFilter.catch);
   }
 
   useControllers(): void {
@@ -46,6 +52,7 @@ export class App {
   async init(): Promise<void> {
     this.useMiddleWares();
     this.useControllers();
+    this.useExceptionFilters();
     this.startServer();
   }
 }
