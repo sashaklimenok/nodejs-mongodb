@@ -8,6 +8,7 @@ import { ILoggerService } from './services/logger/logger.interface';
 import { IAuthController } from './modules/auth/controller/auth.controller.interface';
 import { notFoundMiddleware } from './shared/middlewares/not-found.middleware';
 import { IExceptionFilter } from './shared/exception-filter/exception.filter.interface';
+import { IDatabaseService } from './services/database/database.interface';
 
 @injectable()
 export class App {
@@ -20,6 +21,7 @@ export class App {
     @inject(injectKeys.IConfigService) private config: IConfigService,
     @inject(injectKeys.IAuthController) private authController: IAuthController,
     @inject(injectKeys.IExceptionFilter) private exceptionFilter: IExceptionFilter,
+    @inject(injectKeys.IDatabaseService) private databaseService: IDatabaseService,
   ) {
     this.app = express();
     this.port = this.config.get('PORT');
@@ -50,6 +52,7 @@ export class App {
   }
 
   async init(): Promise<void> {
+    await this.databaseService.connect();
     this.useMiddleWares();
     this.useControllers();
     this.useExceptionFilters();
