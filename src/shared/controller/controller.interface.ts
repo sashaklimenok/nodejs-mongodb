@@ -1,5 +1,6 @@
 import { Router, Response } from 'express';
-import { ExpressHandler, IMiddleware } from '../../types';
+import { ExpressHandler } from '../../types/express-handlers';
+import { IMiddleware } from '../../types/IMiddleware';
 
 export interface IRoute {
   path: string;
