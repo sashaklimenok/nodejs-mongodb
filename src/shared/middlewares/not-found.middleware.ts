@@ -1,9 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import { ExpressHandler } from '../../types/express-handlers';
 
-export const notFoundMiddleware = (
-  _: Request,
-  response: Response,
-): Response<any, Record<string, any>> => {
+export const notFoundMiddleware: ExpressHandler = (_, response) => {
   return response.status(404).json({
     message: 'Not Found',
   });

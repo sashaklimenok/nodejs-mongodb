@@ -3,4 +3,7 @@ export const injectKeys = {
   ILoggerService: Symbol.for('ILoggerService'),
   IConfigService: Symbol.for('IConfigService'),
   IExceptionFilter: Symbol.for('IExceptionFilter'),
+
+  //Controllers
+  IAuthController: Symbol.for('IAuthController'),
 };

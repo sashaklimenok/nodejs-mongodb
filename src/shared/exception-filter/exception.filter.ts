@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { IExceptionFilter } from './exception.filter.interface';
-import { injectKeys } from '../../constants/injectKeys';
+import { injectKeys } from '../constants/injectKeys';
 import { ILoggerService } from '../../services/logger/logger.interface';
 import { HTTPError } from '../http-error/http-errors';
 

@@ -1,7 +1,7 @@
 import { Response, Router } from 'express';
 import { inject, injectable } from 'inversify';
 import { IController, IRoute } from './controller.interface';
-import { injectKeys } from '../../constants/injectKeys';
+import { injectKeys } from '../constants/injectKeys';
 import { ILoggerService } from '../../services/logger/logger.interface';
 
 @injectable()
