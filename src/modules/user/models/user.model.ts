@@ -1,20 +1,17 @@
 import { Schema, model } from 'mongoose';
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 3,
-  },
-  avatar: {
-    type: String,
-    default: '',
-  },
+interface IUser {
+  email: string;
+  password: string;
+  gender: 'male' | 'female';
+  avatar?: string;
+}
+
+const userSchema = new Schema<IUser>({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true, minlength: 3 },
+  gender: { type: String, required: true, enum: ['male', 'female'] },
+  avatar: { type: String, default: '' },
 });
 
 export const UserModel = model('User', userSchema);

@@ -19,6 +19,8 @@ import { IUserService } from './modules/user/service/user.service.interface';
 import { UserService } from './modules/user/service/user.service';
 import { IUserRepository } from './modules/user/repository/user.repository.interface';
 import { userRepository } from './modules/user/repository/user.repository';
+import { HashingService } from './services/hashing/hashing.service';
+import { IHashingService } from './services/hashing/hashing.service.interface';
 
 const compositionRoot = new ContainerModule((bind) => {
   bind<App>(injectKeys.Application).to(App);
@@ -26,6 +28,7 @@ const compositionRoot = new ContainerModule((bind) => {
   bind<IConfigService>(injectKeys.IConfigService).to(ConfigService);
   bind<IExceptionFilter>(injectKeys.IExceptionFilter).to(ExceptionFilter);
   bind<IDatabaseService>(injectKeys.IDatabaseService).to(DatabaseService);
+  bind<IHashingService>(injectKeys.IHashingService).to(HashingService);
 
   // Auth Module
   bind<IAuthController>(injectKeys.IAuthController).to(AuthController);
