@@ -13,6 +13,7 @@ export class DatabaseService implements DatabaseService {
   ) {}
 
   async connect(): Promise<void> {
+    this.loggerService.info('[Database] Start Connection...');
     mongoose
       .connect(this.configService.get('DATABASE'))
       .then(() => {
@@ -24,6 +25,7 @@ export class DatabaseService implements DatabaseService {
   }
 
   async disconnect(): Promise<void> {
+    this.loggerService.info('[Database] Start Disconnection...');
     mongoose
       .disconnect()
       .then(() => {

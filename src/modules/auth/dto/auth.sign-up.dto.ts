@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import { GenderType } from '../../user/interfaces/IUser';
 
 export class AuthSignUpDto {
   @IsEmail()
@@ -8,4 +9,8 @@ export class AuthSignUpDto {
   @IsNotEmpty()
   @Length(3)
   password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  gender: GenderType;
 }
