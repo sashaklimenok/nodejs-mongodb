@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { IUserService } from './user.service.interface';
-import { IUser } from '../interfaces/IUser';
+import { IUser, IUserWithPassword } from '../interfaces/IUser';
 import { injectKeys } from '../../../shared/constants/injectKeys';
 import { IUserRepository } from '../repository/user.repository.interface';
 import { HTTPError } from '../../../shared/http-error/http-errors';
@@ -15,7 +15,7 @@ export class UserService implements IUserService {
   ) {}
 
   async isExist(email: string): Promise<boolean> {
-    const isExists = await this.userRepository.get(email);
+    const isExists = await this.userRepository.getByEmail(email);
     return Boolean(isExists);
   }
 
@@ -31,8 +31,8 @@ export class UserService implements IUserService {
     });
   }
 
-  get(): Promise<void> {
-    return Promise.resolve();
+  async getByEmail(email: string): Promise<IUserWithPassword | null> {
+    return await this.userRepository.getByEmail(email);
   }
 
   delete(): Promise<void> {

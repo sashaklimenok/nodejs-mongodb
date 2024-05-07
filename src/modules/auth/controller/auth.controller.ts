@@ -11,6 +11,7 @@ import { IAuthService } from '../service/auth.service.interface';
 import { ValidateMiddleware } from '../../../shared/middlewares/validated.middleware';
 import { IUserService } from '../../user/service/user.service.interface';
 import { HTTPError } from '../../../shared/http-error/http-errors';
+import { isDevEnvironment } from '../../../shared/utils/environment';
 
 @injectable()
 export class AuthController extends Controller implements IAuthController {
@@ -50,18 +51,43 @@ export class AuthController extends Controller implements IAuthController {
     const isExists = await this.userService.isExist(req.body.email);
     if (!isExists) {
       const user = await this.userService.create(req.body);
+      const token = this.authService.generateToken(user.id);
+      res.cookie('jwt', token, {
+        maxAge: 15 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        sameSite: 'strict',
+        secure: !isDevEnvironment(),
+      });
+
       this.created(res, user);
     } else {
       next(new HTTPError(400, 'Email has already exists'));
     }
   };
 
-  signIn = async (req: Request<{}, {}, AuthSignInDto>, res: Response): Promise<void> => {
-    console.log(req.body);
-    this.ok(res, 'Sign In Method');
+  signIn = async (
+    req: Request<{}, {}, AuthSignInDto>,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    const user = await this.authService.signInUser(req.body);
+    if (user) {
+      const token = this.authService.generateToken(user.id);
+      res.cookie('jwt', token, {
+        maxAge: 15 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        sameSite: 'strict',
+        secure: !isDevEnvironment(),
+      });
+      this.ok(res, user);
+    } else {
+      next(new HTTPError(401, 'Not authorized'));
+    }
   };
 
   signOut: ExpressHandler = async (req, res): Promise<void> => {
+    res.cookie('jwt', '', { maxAge: 0 });
+    this.ok(res, 'Logout');
     this.ok(res, 'sign Out Method');
   };
 }

@@ -1,12 +1,12 @@
 import { injectable } from 'inversify';
 import { IUserRepository } from './user.repository.interface';
-import { IUser } from '../interfaces/IUser';
+import { IUser, IUserWithPassword } from '../interfaces/IUser';
 import { UserModel } from '../models/user.model';
 import { CreateUserDto } from '../dto/create-user.dto';
 
 @injectable()
 export class userRepository implements IUserRepository {
-  async get(email: string): Promise<IUser | null> {
+  async getByEmail(email: string): Promise<IUserWithPassword | null> {
     return await UserModel.findOne({ email });
   }
 
